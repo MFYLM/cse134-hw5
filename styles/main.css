@@ -76,17 +76,15 @@ body {
                 .nav-item a {
                     text-decoration: none;
                     color: var(--color-text-secondary-light); 
-                    transition: color 0.5s, background-color 0.5s;
+                    transition: color 0.5s;
                 }
         
                 .nav-item a:hover {
                     color: var(--active-color);
-                    background-color: var(--background-color); 
                 }
         
                 .nav-item.active a {
                     color: var(--active-color);
-                    background-color: var(--background-color);
                 }
             }
         }
@@ -149,6 +147,9 @@ main {
 
     flex: 1;
     padding: 2rem;
+    
+    /* View Transition API - Animate main content during transitions */
+    view-transition-name: main-content;
 
     p,
     li,
@@ -246,20 +247,6 @@ main {
         }
     }
 
-    /* contact-container {
-
-        button {
-
-        }
-
-        p {
-
-        }
-
-        dialog {
-            
-        }
-    } */
 }
 
 footer {
@@ -275,6 +262,9 @@ footer {
     padding: 0.5rem;
     text-align: center;
     box-sizing: border-box;
+    
+    /* View Transition API - Persist footer during transitions */
+    view-transition-name: footer;
 }
 
 publication-card,
@@ -359,9 +349,16 @@ iframe {
             .navbar {
                 background-color: var(--color-bg-alt-dark);
                 
+                .nav-item a {
+                    color: var(--color-text-secondary-dark);
+                }
+                
+                .nav-item a:hover {
+                    color: var(--active-color);
+                }
+                
                 .nav-item.active a {
                     color: var(--active-color);
-                    background-color: var(--color-bg-alt-dark);
                 }
             }
             
@@ -443,5 +440,49 @@ body:has(#theme-toggle-checkbox:checked) {
         padding: 1rem;
         background-color: transparent;
     }    
+}
+
+
+::view-transition-group(footer) {
+    animation-duration: 0s;
+}
+
+::view-transition-old(main-content) {
+    animation: slide-out-left 0.4s ease-in-out;
+}
+
+::view-transition-new(main-content) {
+    animation: slide-in-right 0.4s ease-in-out;
+}
+
+@keyframes slide-out-left {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+}
+
+@keyframes slide-in-right {
+    from {
+        transform: translateX(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+::view-transition-group(*) {
+    animation-duration: 0.4s;
+    animation-timing-function: ease-in-out;
+}
+
+::view-transition {
+    pointer-events: none;
 }
 

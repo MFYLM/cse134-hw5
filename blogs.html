@@ -4,12 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blogs - Feiyang Ma</title>
+    <style>
+        @view-transition { navigation: auto; }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="/scripts/theme-toggle.js" defer></script>
+    <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/blogs.css">
 </head>
 
 <body>
     <input type="checkbox" hidden id="theme-toggle-checkbox">
+    <script>
+        (function() {
+            try {
+                if (localStorage.getItem('theme-preference') === 'dark') {
+                    document.getElementById('theme-toggle-checkbox').checked = true;
+                }
+            } catch(e) {}
+        })();
+    </script>
     <header class="header">
         <nav class="navbar">
             <ul class="navbar-nav">
@@ -22,9 +36,12 @@
                 <li class="nav-item active">
                     <a href="/blogs.html">blogs</a>
                 </li>
-                <!-- <li class="nav-item" >
-                    <a href="experiments.html">Experiments</a>
-                </li> -->
+                <li class="nav-item">
+                    <a href="/form-no-js.html">contact (without JS)</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/form-with-js.html">contact (with JS)</a>
+                </li>
                 <li class="nav-item">
                     <label for="theme-toggle-checkbox" id="theme-toggle-label" title="toggle dark mode">
                         <i class="fas fa-sun"></i>
@@ -33,7 +50,6 @@
                 </li>
             </ul>
         </nav>
-        <!-- <progress id="scrollProgressBar" value="0" max="100"></progress> -->
     </header>
     
     <main class="main">

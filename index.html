@@ -4,8 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Feiyang Ma</title>
+        <style>
+            @view-transition { navigation: auto; }
+        </style>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <script src="/scripts/demo.js" defer></script>
+        <script src="/scripts/theme-toggle.js" defer></script>
+        <script src="/scripts/contact.js" defer></script>
         
         <link rel="stylesheet" href="/styles/main.css">
         <link rel="stylesheet" href="/styles/experience-card.css">
@@ -14,14 +18,23 @@
 
     <body>
         <input type="checkbox" hidden id="theme-toggle-checkbox">
-        <!-- <input type="checkbox" hidden id="hamburger-toggle"> -->
+        <script>
+            (function() {
+                try {
+                    if (localStorage.getItem('theme-preference') === 'dark') {
+                        document.getElementById('theme-toggle-checkbox').checked = true;
+                    }
+                } catch(e) {}
+            })();
+        </script>
+        <input type="checkbox" hidden id="hamburger-toggle">
 
         <header class="header">
-            <!-- <label for="hamburger-toggle" class="hamburger-icon">
+            <label for="hamburger-toggle" class="hamburger-icon">
                 <span></span>
                 <span></span>
                 <span></span>
-            </label> -->
+            </label>
     
             <nav class="navbar">
                 <ul class="navbar-nav">
@@ -34,9 +47,12 @@
                     <li class="nav-item">
                         <a href="/blogs.html">blogs</a>
                     </li>
-                    <!-- <li class="nav-item" >
-                        <a href="experiments.html">Experiments</a>
-                    </li> -->
+                    <li class="nav-item">
+                        <a href="/form-no-js.html">contact (without JS)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/form-with-js.html">contact (with JS)</a>
+                    </li>
                     <li class="nav-item">
                         <label for="theme-toggle-checkbox" id="theme-toggle-label" title="toggle dark mode">
                             <i class="fas fa-sun"></i>
@@ -145,22 +161,7 @@
             <br>
 
             <contact-container>
-                <p>If you have any questions, please feel free to contact me via email at <a href="mailto:feiyangma@ucsd.edu">feiyangma@ucsd.edu</a>.</p>
-                <!-- <p>If you have any questions, please feel free to contact <button onclick="document.getElementById('contactDialog').showModal()">me</button>.</p>
-                <dialog id="contact-dialog">
-                    <form class="contact-form" action="https://formspree.io/f/xayvopwr" method="POST" >
-                        <fieldset>
-                            <legend>Contact Me</legend>
-                            <label for="email">
-                                Email: <input id="email" type="email" name="email" placeholder="Your email" required>
-                            </label>
-                            <label for="message">
-                                Message: <textarea id="message" name="message" placeholder="Your message" rows="4" required></textarea>
-                            </label>
-                            <button type="submit">Send</button>
-                        </fieldset>
-                    </form>
-                </dialog> -->
+                <p>If you have any questions, please feel free to contact <a href="/form-no-js.html">me</a>.</p>
             </contact-container>
         </main>
         
@@ -171,6 +172,19 @@
         </footer>
     </body>
 
-    <noscript>You need to enable JavaScript to view this website!</noscript>
+    <noscript>
+        <style>
+            .noscript-warning {
+                background-color: #fff3cd;
+                color: #856404;
+                padding: 1rem;
+                text-align: center;
+                border-bottom: 2px solid #ffc107;
+            }
+        </style>
+        <div class="noscript-warning">
+            JavaScript is disabled. The site will work, but theme preferences won't be saved between visits.
+        </div>
+    </noscript>
 </html>
 
