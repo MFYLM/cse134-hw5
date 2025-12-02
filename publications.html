@@ -9,10 +9,10 @@
         </style>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <script src="/scripts/theme-toggle.js" defer></script>
-        <script src="/scripts/demo.js" defer></script>
+        <script src="/scripts/custom-cards.js" defer></script>
+        <script src="/scripts/data-loader.js" defer></script>
         
         <link rel="stylesheet" href="/styles/main.css">
-        <link rel="stylesheet" href="/styles/publication-card.css">
     </head>
 
     <body>
@@ -40,6 +40,9 @@
                         <a href="/blogs.html">blogs</a>
                     </li>
                     <li class="nav-item">
+                        <a href="/crud-publications.html">manage publications</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="/form-no-js.html">contact (without JS)</a>
                     </li>
                     <li class="nav-item">
@@ -59,17 +62,21 @@
             <publications>
                 <h1>Publications</h1>
                 
-                <publication-card>
-                    <h4><a href="https://arxiv.org/abs/paper-link">Self-Supervised Learning with 2D-3D Correspondences in Autonomous Driving</a></h4>
-                    <p>Authors: Feiyang Ma, Co-author One, Co-author Two</p>
-                    <p>Conference on Computer Vision and Pattern Recognition (CVPR), 2026</p>
-                </publication-card>
+                <div class="data-controls">
+                    <button onclick="window.dataLoader.loadLocal('publications-container')" class="btn btn-primary">
+                        <i class="fas fa-database"></i> Load Local
+                    </button>
+                    <button onclick="window.dataLoader.loadRemote('publications-container')" class="btn btn-secondary">
+                        <i class="fas fa-cloud-download-alt"></i> Load Remote
+                    </button>
+                </div>
 
-                <publication-card>
-                    <h4><a href="#">Geometric Priors in Action Learning for Robot Manipulation</a></h4>
-                    <p>Authors: Feiyang Ma, Another Author</p>
-                    <p>International Conference on Machine Learning (ICML), 2026</p>
-                </publication-card>
+                <div id="publications-container">
+                    <!-- Publication cards will be dynamically loaded here -->
+                    <p style="color: var(--color-text-secondary-light); font-style: italic;">
+                        Click "Load Local" or "Load Remote" to load publications.
+                    </p>
+                </div>
             </publications>
         </main>
         

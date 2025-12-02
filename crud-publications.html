@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Publications - CRUD Operations</title>
+    <style>
+        @view-transition { navigation: auto; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="/scripts/theme-toggle.js" defer></script>
+    <script src="/scripts/custom-cards.js" defer></script>
+    <script src="/scripts/crud-operations.js" defer></script>
+    
+    <link rel="stylesheet" href="/styles/main.css">
+    <style>
+        .crud-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        .mode-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--color-border-light);
+            background: var(--color-bg-light);
+            color: var(--color-text-primary-light);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mode-btn:hover {
+            border-color: var(--active-color);
+            transform: translateY(-2px);
+        }
+
+        .mode-btn.active {
+            background: var(--active-color);
+            color: white;
+            border-color: var(--active-color);
+        }
+
+        .current-mode-indicator {
+            padding: 0.5rem 1rem;
+            background: var(--color-bg-alt-light);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            color: var(--active-color);
+        }
+
+        .crud-section {
+            background: var(--color-card-bg-light);
+            border: 2px solid var(--color-border-light);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--color-card-shadow-light);
+        }
+
+        .crud-section h2 {
+            margin-top: 0;
+            color: var(--color-text-primary-light);
+            border-bottom: 2px solid var(--color-border-light);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-text-primary-light);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--color-border-light);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-family: var(--font-main);
+            background: var(--color-bg-light);
+            color: var(--color-text-primary-light);
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--active-color);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 0.25rem;
+            color: var(--color-text-secondary-light);
+            font-size: 0.875rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn-submit {
+            padding: 1rem 2rem;
+            background: var(--active-color);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-reset {
+            padding: 1rem 2rem;
+            background: var(--color-text-secondary-light);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+        }
+
+        .btn-reset:hover {
+            opacity: 0.8;
+        }
+
+        #publications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .publication-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--color-bg-alt-light);
+            border: 2px solid var(--color-border-light);
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .publication-item:hover {
+            border-color: var(--active-color);
+            transform: translateX(5px);
+        }
+
+        .pub-info {
+            flex: 1;
+        }
+
+        .pub-info h3 {
+            margin: 0 0 0.5rem 0;
+            color: var(--color-text-primary-light);
+            font-size: 1.1rem;
+        }
+
+        .pub-meta {
+            color: var(--color-text-secondary-light);
+            font-size: 0.9rem;
+            margin: 0.25rem 0;
+        }
+
+        .pub-desc {
+            color: var(--color-text-secondary-light);
+            font-size: 0.875rem;
+            margin: 0.5rem 0 0 0;
+        }
+
+        .pub-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-edit,
+        .btn-delete {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-edit {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-item {
+            padding: 1rem;
+            background: var(--color-bg-alt-light);
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--active-color);
+        }
+
+        .stat-label {
+            color: var(--color-text-secondary-light);
+            font-size: 0.875rem;
+        }
+
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 0.5rem;
+        }
+
+        .info-box p {
+            margin: 0;
+            color: #1e40af;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="checkbox" hidden id="theme-toggle-checkbox">
+    <script>
+        (function() {
+            try {
+                if (localStorage.getItem('theme-preference') === 'dark') {
+                    document.getElementById('theme-toggle-checkbox').checked = true;
+                }
+            } catch(e) {}
+        })();
+    </script>
+
+    <header class="header">
+        <nav class="navbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="/">about</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/publications.html">publications</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/blogs.html">blogs</a>
+                </li>
+                <li class="nav-item active">
+                    <a href="/crud-publications.html">manage publications</a>
+                </li>
+                <li class="nav-item">
+                    <label for="theme-toggle-checkbox" id="theme-toggle-label" title="toggle dark mode">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                    </label>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main class="main">
+        <div class="crud-container">
+            <h1>Manage Publications - CRUD Operations</h1>
+            
+            <div class="info-box">
+                <p>
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Instructions:</strong> Select your storage mode (Local or Remote), then create, update, or delete publications. 
+                    Changes will take effect immediately and be visible when you reload publications on the main page.
+                </p>
+            </div>
+
+            <!-- Mode Selector -->
+            <div class="mode-selector">
+                <button class="mode-btn active" data-mode="local" onclick="window.crudOps.switchMode('local')">
+                    <i class="fas fa-database"></i> Local Storage
+                </button>
+                <button class="mode-btn" data-mode="remote" onclick="window.crudOps.switchMode('remote')">
+                    <i class="fas fa-cloud"></i> Remote (JSONBin)
+                </button>
+                <div class="current-mode-indicator">
+                    Current: <span id="current-mode">Local Storage</span>
+                </div>
+            </div>
+
+            <!-- Create/Update Form -->
+            <div class="crud-section">
+                <form id="crud-form">
+                    <input type="hidden" id="pub-id">
+                    
+                    <h2>Create New Publication</h2>
+
+                    <div class="form-group">
+                        <label for="pub-title">Title <span style="color: red;">*</span></label>
+                        <input type="text" id="pub-title" required placeholder="Enter publication title">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pub-authors">Authors <span style="color: red;">*</span></label>
+                            <input type="text" id="pub-authors" required placeholder="Author One, Author Two">
+                        </div>
+                        <div class="form-group">
+                            <label for="pub-year">Year <span style="color: red;">*</span></label>
+                            <input type="number" id="pub-year" required placeholder="2024" min="1900" max="2100">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pub-venue">Venue/Conference <span style="color: red;">*</span></label>
+                        <input type="text" id="pub-venue" required placeholder="Conference Name (ACRONYM)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pub-link">Paper Link <span style="color: red;">*</span></label>
+                        <input type="url" id="pub-link" required placeholder="https://arxiv.org/abs/...">
+                        <small>Full URL to the paper or publication page</small>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pub-image">Image URL</label>
+                            <input type="url" id="pub-image" placeholder="https://example.com/image.jpg">
+                            <small>Representative image for the publication</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="pub-image-alt">Image Alt Text</label>
+                            <input type="text" id="pub-image-alt" placeholder="Description of the image">
+                            <small>Accessibility description for the image</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pub-description">Description/Abstract <span style="color: red;">*</span></label>
+                        <textarea id="pub-description" required placeholder="Brief description or abstract of the publication..."></textarea>
+                        <small>A concise summary of the publication's contribution</small>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-plus"></i> Create Publication
+                        </button>
+                        <button type="reset" class="btn-reset" onclick="document.getElementById('pub-id').value=''; document.querySelector('#crud-form h2').textContent='Create New Publication'; document.querySelector('#crud-form button[type=submit]').innerHTML='<i class=\'fas fa-plus\'></i> Create Publication';">
+                            <i class="fas fa-undo"></i> Reset Form
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Publications List -->
+            <div class="crud-section">
+                <h2>
+                    Existing Publications
+                    <span class="stat-value" style="font-size: 1rem; margin-left: 1rem;">
+                        (<span id="pub-count">0</span> total)
+                    </span>
+                </h2>
+                
+                <div id="publications-list">
+                    <p style="color: var(--color-text-secondary-light);">Loading publications...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            &copy; Copyright 2025 Feiyang Ma (Last updated: 2025-10-16)
+        </div>
+    </footer>
+
+    <noscript>
+        <style>
+            .noscript-warning {
+                background-color: #fff3cd;
+                color: #856404;
+                padding: 1rem;
+                text-align: center;
+                border-bottom: 2px solid #ffc107;
+            }
+        </style>
+        <div class="noscript-warning">
+            JavaScript is required for CRUD operations to work.
+        </div>
+    </noscript>
+</body>
+</html>
+

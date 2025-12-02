@@ -10,10 +10,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <script src="/scripts/theme-toggle.js" defer></script>
         <script src="/scripts/contact.js" defer></script>
+        <script src="/scripts/custom-cards.js" defer></script>
+        <script src="/scripts/data-loader.js" defer></script>
         
         <link rel="stylesheet" href="/styles/main.css">
-        <link rel="stylesheet" href="/styles/experience-card.css">
-        <link rel="stylesheet" href="/styles/publication-card.css">
     </head>
 
     <body>
@@ -46,6 +46,9 @@
                     </li>
                     <li class="nav-item">
                         <a href="/blogs.html">blogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/crud-publications.html">manage publications</a>
                     </li>
                     <li class="nav-item">
                         <a href="/form-no-js.html">contact (without JS)</a>
@@ -129,34 +132,64 @@
             <publications>
                 <h1>Selected Publications (<a href="/publications.html">full list</a>)</h1>
                 
-                <publication-card>
-                    <h4><a href="https://arxiv.org/abs/paper-link">Self-Supervised Learning with 2D-3D Correspondences in Autonomous Driving</a></h4>
-                    <p>Authors: Feiyang Ma, Co-author One, Co-author Two</p>
-                    <p>Conference on Computer Vision and Pattern Recognition (CVPR), 2026</p>
+                <publication-card 
+                    title="Self-Supervised Learning with 2D-3D Correspondences in Autonomous Driving"
+                    authors="Feiyang Ma, Co-author One, Co-author Two"
+                    venue="Conference on Computer Vision and Pattern Recognition (CVPR)"
+                    year="2026"
+                    link="https://arxiv.org/abs/paper-link"
+                    image="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=300&h=200&fit=crop"
+                    image-alt="Autonomous driving visualization with 3D point clouds"
+                    description="We propose a novel self-supervised learning framework that leverages 2D-3D correspondences for learning robust representations in autonomous driving scenarios. Our method significantly outperforms previous state-of-the-art approaches on multiple benchmarks.">
                 </publication-card>
 
-                <publication-card>
-                    <h4><a href="#">Geometric Priors in Action Learning for Robot Manipulation</a></h4>
-                    <p>Authors: Feiyang Ma, Another Author</p>
-                    <p>International Conference on Machine Learning (ICML), 2026</p>
+                <publication-card 
+                    title="Geometric Priors in Action Learning for Robot Manipulation"
+                    authors="Feiyang Ma, Another Author"
+                    venue="International Conference on Machine Learning (ICML)"
+                    year="2026"
+                    link="https://arxiv.org/abs/paper-link-2"
+                    image="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=300&h=200&fit=crop"
+                    image-alt="Robot arm performing manipulation tasks"
+                    description="This work introduces geometric priors based on SE(3) equivariance into action learning for robot manipulation. Our approach enables more sample-efficient learning and better generalization to novel objects and configurations.">
                 </publication-card>
             </publications>
             <br>
             <div class="experiences">
                 <h1>Experience</h1>
 
-                <experience-card title="Graduate Research Assistant - UCSD Vision Lab">
-                    <p>Working on self-supervised learning for 3D vision tasks.</p>
+                <experience-card 
+                    title="Graduate Research Assistant"
+                    organization="UCSD Vision Lab"
+                    period="Sep 2024 - Present"
+                    location="San Diego, CA"
+                    image="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=300&h=300&fit=crop"
+                    image-alt="UCSD campus building"
+                    description="Working on self-supervised learning for 3D vision tasks with focus on geometric deep learning."
+                    link="https://vision.ucsd.edu">
                     <ul>
-                        <li>Developed novel architectures for processing point cloud data.</li>
-                        <li>Researched applications of geometric deep learning and Lie groups.</li>
-                        <li>Prepared manuscripts for publication in top-tier conferences.</li>
+                        <li>Developed novel architectures for processing point cloud data using SE(3) equivariant networks</li>
+                        <li>Researched applications of geometric deep learning and Lie groups in computer vision</li>
+                        <li>Prepared manuscripts for publication in top-tier conferences (CVPR, ICML)</li>
+                        <li>Collaborated with industry partners on autonomous driving perception systems</li>
                     </ul>
                 </experience-card>
                 
-                <experience-card title="Machine Learning Intern - Tech Company Inc.">
-                    <p>Implemented and tested production models for 3D reconstruction.</p>
-                </existing-card>
+                <experience-card 
+                    title="Machine Learning Intern"
+                    organization="Tech Company Inc."
+                    period="Jun 2023 - Aug 2024"
+                    location="San Francisco, CA"
+                    image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&h=300&fit=crop"
+                    image-alt="Modern tech company office building"
+                    description="Implemented and tested production models for 3D reconstruction from multi-view imagery."
+                    link="https://techcompany.example.com">
+                    <ul>
+                        <li>Built and deployed 3D reconstruction pipelines processing millions of images daily</li>
+                        <li>Optimized model inference speed by 40% through quantization and pruning techniques</li>
+                        <li>Collaborated with cross-functional teams to integrate ML models into production systems</li>
+                    </ul>
+                </experience-card>
             </div>
             <br>
 

@@ -9,6 +9,7 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="/scripts/theme-toggle.js" defer></script>
+    <script src="/scripts/toc-highlight.js" defer></script>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/single-blog.css">
 </head>
@@ -49,18 +50,19 @@
         </nav>
     </header>
     
-    <main>
-        <!-- <side-menu>
-            <nav class="side-menu">
-                <h3>in this article</h3>
-                <ul>
-                    <li><a href="#section-1">the core idea</a></li>
-                    <li><a href="#section-2">the forward process</a></li>
-                    <li><a href="#section-3">the reverse process</a></li>
-                    <li><a href="#section-4">conclusion</a></li>
+    <main class="blog-layout">
+        <aside class="table-of-contents">
+            <nav class="toc-nav">
+                <h2 class="toc-title">Contents</h2>
+                <ul class="toc-list">
+                    <li><a href="#section-1">Moving from Euclidean Space to Non-Euclidean Space</a>
+                        <ul class="toc-sublist">
+                            <li><a href="#section-1-1">Metric Space</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
-        </side-menu> -->
+        </aside>
 
         <article class="post-content">
             <post-header>
@@ -72,13 +74,13 @@
             </post-header>
 
             <post-body>
-                <h2>Moving from Euclidean Space to Non-Euclidean Space</h2>
+                <h2 id="section-1">Moving from Euclidean Space to Non-Euclidean Space</h2>
                 <p>
                     Ecludiean space is very intuitive. Most of objects in the real world are in Euclidean measure which can be understood naturally. However, when we begin to talk about machine learning models that usually have millions
                     or trillions of parameters, it becomes impossible to deciper them in traditional way. To study latent variables or lower dimesional spaces learned from high dimenisonal input data, we need to equip ourselves with more abstract
                     tools to analyze them. In addition, this would help us understand what model actually learn from data and make it possible to add strong inductive biases from existing knowledge.
                 </p>
-                <h3>Metric Space</h3>
+                <h3 id="section-1-1">Metric Space</h3>
                 <p>
                     A metric space is a set equipped with a function that satisfies the following properties:
                     <ul>

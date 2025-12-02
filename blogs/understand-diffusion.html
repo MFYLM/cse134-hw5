@@ -9,6 +9,7 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="/scripts/theme-toggle.js" defer></script>
+    <script src="/scripts/toc-highlight.js" defer></script>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/single-blog.css">
 </head>
@@ -50,39 +51,41 @@
         </nav>
     </header>
     
-    <main class="main">
-        <post-header>
-            <h1>Understanding Diffusion Models</h1>
-            <p class="date">published on October 15, 2025</p>
-            <p class="summary">
-                a deep dive into how diffusion models work, from the basic principles to the latest advancements in text-to-image generation.
-            </p>
-        </post-header>
-
-        <!-- <side-menu>
-            <nav class="side-menu">
-                <h3>in this article</h3>
-                <ul>
-                    <li><a href="#section-1">the core idea: adding noise</a></li>
-                    <li><a href="#section-2">the forward process: a mathematical view</a></li>
-                    <li><a href="#section-3">the reverse process: learning to denoise</a></li>
+    <main class="blog-layout">
+        <aside class="table-of-contents">
+            <nav class="toc-nav">
+                <h2 class="toc-title">Contents</h2>
+                <ul class="toc-list">
+                    <li><a href="#section-1">The Core Idea: Adding Noise</a></li>
+                    <li><a href="#section-2">The Forward Process: A Mathematical View</a></li>
+                    <li><a href="#section-3">The Reverse Process: Learning to Denoise</a></li>
                     <li><a href="#section-4">Efficient Training</a></li>
-                    <li><a href="#section-5">conclusion</a></li>
+                    <li><a href="#section-5">Conclusion</a></li>
                 </ul>
             </nav>
-        </side-menu> -->
-        <post-body>
+        </aside>
+
+        <article class="post-content">
+            <post-header>
+                <h1>Understanding Diffusion Models</h1>
+                <p class="date">published on October 15, 2025</p>
+                <p class="summary">
+                    a deep dive into how diffusion models work, from the basic principles to the latest advancements in text-to-image generation.
+                </p>
+            </post-header>
+
+            <post-body>
             <p>
                 diffusion models have recently taken the world of generative ai by storm. from dalle-2 to stable diffusion, these models produce stunningly realistic images from simple text prompts. but how do they work? the core idea is surprisingly elegant: start with noise, and slowly learn to reverse the noise to create an image.
             </p>
 
-            <h2 id="section-1">the core idea: adding noise</h2>
+            <h2 id="section-1">The Core Idea: Adding Noise</h2>
             <p>
                 imagine you have a clear photograph. now, you add a tiny amount of gaussian noise to it. the image is now slightly distorted. what if you repeat this process hundreds, or even thousands, of times? eventually, your original photograph will be indistinguishable from pure, random noise. this is the "forward process," and it's a fixed, straightforward procedure.
                 For each time step, only image from the last time step is needed to generate the image at the current time step, which forms a Markov chain.
             </p>
 
-            <h2 id="section-2">the forward process: a mathematical view</h2>
+            <h2 id="section-2">The Forward Process: A Mathematical View</h2>
             <p>
                 mathematically, the forward process is a markov chain that gradually adds noise to data. given a data point <math><msub><mi>x</mi><mn>0</mn></msub></math>, we can define the process as:
             </p>
@@ -164,7 +167,7 @@
                 We can view diffusion model as a hierarchical variational autoencode where each node on Markov Chain is a latent variable corresponding to a noise level. Intuitively,
                 since the model only predicts a slightly less noisy input, it becomes easier to fully reconstruct the original input after certain number of steps.  
             </p>
-            <h2 id="section-3">the reverse process: learning to denoise</h2>
+            <h2 id="section-3">The Reverse Process: Learning to Denoise</h2>
             <p>
                 the magic is in the "reverse process." here, we train a neural network to undo one step of the noising process. given a noisy image <math><msub><mi>x</mi><mi>t</mi></msub></math>, the network's job is to predict the slightly less noisy image <math><msub><mi>x</mi><mrow><mi>t</mi><mo>-</mo><mn>1</mn></mrow></msub></math>, or more commonly, to predict the noise that was added.
             </p>
@@ -197,14 +200,15 @@ def training_step(original_image, model):
                 solution for different noise levels and allow constant sampling for different timesteps. 
             </p>
 
-            <h2 id="section-5">conclusion</h2>
+            <h2 id="section-5">Conclusion</h2>
             <p>
                 By training a network to perform this simple denoising task at every possible noise level, the model implicitly learns the entire data distribution. 
                 To generate a new point point, we simply start with random noise (<math><msub><mi>x</mi><mi>T</mi></msub></math>) and apply the learned denoising network 
                 iteratively for <math><mi>T</mi></math> steps until we arrive at a clean data point (<math><msub><mi>x</mi><mn>0</mn></msub></math>). 
                 It's a powerful and scalable approach that forms the foundation of modern generative modeling.
             </p>
-        </post-body>
+            </post-body>
+        </article>
     </main>
     
     <footer class="footer">

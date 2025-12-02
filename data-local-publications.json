@@ -1,0 +1,38 @@
+{
+  "publications": [
+    {
+      "id": "1732000001",
+      "title": "Local Dataset: Self-Supervised Learning with 2D-3D Correspondences",
+      "authors": "Feiyang Ma, Local Collaborator A, Local Collaborator B",
+      "venue": "Conference on Computer Vision and Pattern Recognition (CVPR)",
+      "year": "2026",
+      "link": "https://arxiv.org/abs/2024.local-1",
+      "image": "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=300&h=200&fit=crop",
+      "imageAlt": "Autonomous driving with LiDAR point clouds",
+      "description": "Local storage dataset: Novel self-supervised learning approach leveraging 2D-3D correspondences for robust representation learning in autonomous driving scenarios."
+    },
+    {
+      "id": "1732000002",
+      "title": "Local Dataset: Geometric Deep Learning for Robotics",
+      "authors": "Feiyang Ma, Local Author C",
+      "venue": "International Conference on Machine Learning (ICML)",
+      "year": "2026",
+      "link": "https://arxiv.org/abs/2024.local-2",
+      "image": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=300&h=200&fit=crop",
+      "imageAlt": "Industrial robot arm in action",
+      "description": "Local storage dataset: Introduces SE(3) equivariant geometric priors for sample-efficient robot manipulation learning with better generalization."
+    },
+    {
+      "id": "1732000003",
+      "title": "Local Dataset: Neural Scene Understanding at Scale",
+      "authors": "Feiyang Ma, Local Researcher D, Local Researcher E",
+      "venue": "European Conference on Computer Vision (ECCV)",
+      "year": "2025",
+      "link": "https://arxiv.org/abs/2024.local-3",
+      "image": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=300&h=200&fit=crop",
+      "imageAlt": "3D scene reconstruction",
+      "description": "Local storage dataset: Comprehensive deep learning framework for 3D scene understanding including semantic and instance segmentation in point clouds."
+    }
+  ]
+}
+

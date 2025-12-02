@@ -149,7 +149,6 @@ main {
     flex: 1;
     padding: 2rem;
     
-    /* View Transition API - Animate main content during transitions */
     view-transition-name: main-content;
 
     p,
@@ -239,6 +238,8 @@ main {
             }
         }
 
+        publications, 
+
         .content-container {
             a {
                 text-decoration: none;
@@ -248,6 +249,25 @@ main {
         }
     }
 
+    publications a {
+        color: var(--active-color);
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+
+        &:hover {
+            color: var(--active-color-muted, #0056b3);
+        }
+    }
+
+    contact-container a {
+        color: var(--active-color);
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+
+        &:hover {
+            color: var(--active-color-muted, #0056b3);
+        }
+    }
 }
 
 footer {
@@ -264,37 +284,67 @@ footer {
     text-align: center;
     box-sizing: border-box;
     
-    /* View Transition API - Persist footer during transitions */
     view-transition-name: footer;
 }
 
 publication-card,
 experience-card {
     display: block;
-    background-color: var(--color-card-bg-light);
-    border: 2px solid var(--color-border-light);
-    color: var(--color-text-secondary-light);
-    box-shadow: var(--color-card-shadow-light);
-    padding: 1.5rem;
-    border-radius: 0.5rem;
     margin-bottom: 1rem;
+}
 
-    &:hover {
-        border-color: var(--border-interactive, var(--active-color));
-        background-color: var(--card-hover-bg, var(--color-card-bg-light));
-        
-        @supports (color: color(display-p3 1 1 1)) {
-            border-color: var(--active-color-p3);
-        }
-    }
-    
-    a {
-        color: var(--active-color);
-        
-        @supports (color: color(display-p3 1 1 1)) {
-            color: var(--active-color-p3);
-        }
-    }
+/* Data loading controls */
+.data-controls {
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-main);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background-color: var(--active-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: color-mix(in srgb, var(--active-color) 85%, black);
+}
+
+.btn-secondary {
+    background-color: var(--color-text-secondary-light);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: color-mix(in srgb, var(--color-text-secondary-light) 85%, black);
+}
+
+#publications-container,
+#experiences-container {
+    margin-top: 1rem;
 }
 
 iframe {
@@ -405,10 +455,12 @@ iframe {
 
             publication-card,
             experience-card {
-                background-color: var(--color-card-bg-dark);
-                border-color: var(--color-border-dark);
-                color: var(--color-text-secondary-dark);
-                box-shadow: var(--color-card-shadow-dark);
+                /* Set CSS variables that Shadow DOM will inherit */
+                --color-card-bg-light: var(--color-card-bg-dark);
+                --color-border-light: var(--color-border-dark);
+                --color-text-primary-light: var(--color-text-primary-dark);
+                --color-text-secondary-light: var(--color-text-secondary-dark);
+                --color-card-shadow-light: var(--color-card-shadow-dark);
             }
         }
 
