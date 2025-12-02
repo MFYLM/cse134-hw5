@@ -1,8 +1,3 @@
-/**
- * Theme Toggle with localStorage persistence
- * Part 4.1 - CSE 134 HW4
- */
-
 (function() {
     'use strict';
 

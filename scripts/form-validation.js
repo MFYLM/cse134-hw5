@@ -17,9 +17,6 @@ const messageError = document.getElementById('message-error');
 const MESSAGE_MAX_LENGTH = 500;
 const MESSAGE_WARNING_THRESHOLD = 50;
 
-/**
- * Show error message with fade-out effect
- */
 function showErrorMessage(message, duration = 3000) {
     errorOutput.textContent = message;
     errorOutput.style.opacity = '1';

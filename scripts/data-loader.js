@@ -1,9 +1,3 @@
-/**
- * Data Loader for Publication Cards
- * Part 2 - CSE 134 HW5
- * Handles loading data from localStorage and remote server
- */
-
 (function() {
     'use strict';
 

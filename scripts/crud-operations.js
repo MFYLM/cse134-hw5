@@ -1,9 +1,3 @@
-/**
- * CRUD Operations for Publication Management
- * Part 3 - CSE 134 HW5
- * Handles Create, Update, Delete operations on localStorage and remote JSONBin
- */
-
 (function() {
     'use strict';
 
@@ -11,10 +5,8 @@
     const REMOTE_JSON_URL = 'https://api.jsonbin.io/v3/b/6926397a43b1c97be9c53315';
     const API_KEY = '$2a$10$bzG2ZR2n5Qt67wn7BB/tqusE0rB74EU7h0aQiOuOaCePdKQDl.A.m';
 
-    // Get current storage mode (local or remote)
-    let currentMode = 'local'; // default
+    let currentMode = 'local';
 
-    // Load publications from localStorage
     function loadFromLocalStorage() {
         try {
             const data = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -26,7 +18,6 @@
         }
     }
 
-    // Save publications to localStorage
     function saveToLocalStorage(data) {
         try {
             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
@@ -118,29 +109,35 @@
         return null;
     }
 
-    // UPDATE: Update existing publication
     async function updatePublication(id, updatedData) {
         showNotification('Updating publication...', 'info');
+        console.log(`[UPDATE] Attempting to update publication with ID: ${id} in ${currentMode} mode`);
 
         const data = currentMode === 'local' 
             ? loadFromLocalStorage() 
             : await loadFromRemote();
 
-        const index = data.publications.findIndex(pub => pub.id === id);
+        // Convert ID to string for consistent comparison
+        const idStr = String(id);
+        console.log(`[UPDATE] Looking for ID: "${idStr}" among ${data.publications.length} publications`);
+        console.log(`[UPDATE] Available IDs:`, data.publications.map(p => String(p.id)));
+        
+        const index = data.publications.findIndex(pub => String(pub.id) === idStr);
         
         if (index === -1) {
+            console.error(`[UPDATE] Publication not found with ID: ${idStr}`);
             showNotification('Publication not found', 'error');
             return false;
         }
+        
+        console.log(`[UPDATE] Found publication at index ${index}`);
 
-        // Merge updated data
         data.publications[index] = {
             ...data.publications[index],
             ...updatedData,
-            id // Keep original ID
+            id
         };
 
-        // Save based on current mode
         const success = currentMode === 'local'
             ? saveToLocalStorage(data)
             : await saveToRemote(data);
@@ -154,24 +151,32 @@
         return false;
     }
 
-    // DELETE: Remove publication
     async function deletePublication(id) {
         if (!confirm('Are you sure you want to delete this publication?')) {
             return false;
         }
 
         showNotification('Deleting publication...', 'info');
+        console.log(`[DELETE] Attempting to delete publication with ID: ${id} in ${currentMode} mode`);
 
         const data = currentMode === 'local' 
             ? loadFromLocalStorage() 
             : await loadFromRemote();
 
-        const index = data.publications.findIndex(pub => pub.id === id);
+        // Convert ID to string for consistent comparison
+        const idStr = String(id);
+        console.log(`[DELETE] Looking for ID: "${idStr}" among ${data.publications.length} publications`);
+        console.log(`[DELETE] Available IDs:`, data.publications.map(p => String(p.id)));
+        
+        const index = data.publications.findIndex(pub => String(pub.id) === idStr);
         
         if (index === -1) {
+            console.error(`[DELETE] Publication not found with ID: ${idStr}`);
             showNotification('Publication not found', 'error');
             return false;
         }
+        
+        console.log(`[DELETE] Found publication at index ${index}`);
 
         data.publications.splice(index, 1);
 
@@ -221,6 +226,10 @@
     function createPublicationListItem(pub) {
         const div = document.createElement('div');
         div.className = 'publication-item';
+        
+        // Escape ID for safe HTML attribute usage
+        const escapedId = String(pub.id).replace(/'/g, "\\'");
+        
         div.innerHTML = `
             <div class="pub-info">
                 <h3>${pub.title}</h3>
@@ -228,10 +237,10 @@
                 <p class="pub-desc">${pub.description ? pub.description.substring(0, 100) + '...' : 'No description'}</p>
             </div>
             <div class="pub-actions">
-                <button onclick="window.crudOps.editPublication('${pub.id}')" class="btn-edit">
+                <button onclick="window.crudOps.editPublication('${escapedId}')" class="btn-edit">
                     <i class="fas fa-edit"></i> Edit
                 </button>
-                <button onclick="window.crudOps.deletePublication('${pub.id}')" class="btn-delete">
+                <button onclick="window.crudOps.deletePublication('${escapedId}')" class="btn-delete">
                     <i class="fas fa-trash"></i> Delete
                 </button>
             </div>
@@ -241,16 +250,26 @@
 
     // Edit publication - populate form with existing data
     async function editPublication(id) {
+        console.log(`[EDIT] Attempting to edit publication with ID: ${id} in ${currentMode} mode`);
+        
         const data = currentMode === 'local' 
             ? loadFromLocalStorage() 
             : await loadFromRemote();
 
-        const pub = data.publications.find(p => p.id === id);
+        // Convert ID to string for consistent comparison
+        const idStr = String(id);
+        console.log(`[EDIT] Looking for ID: "${idStr}" among ${data.publications.length} publications`);
+        console.log(`[EDIT] Available IDs:`, data.publications.map(p => String(p.id)));
+        
+        const pub = data.publications.find(p => String(p.id) === idStr);
         
         if (!pub) {
+            console.error(`[EDIT] Publication not found with ID: ${idStr}`);
             showNotification('Publication not found', 'error');
             return;
         }
+        
+        console.log(`[EDIT] Found publication:`, pub.title);
 
         // Populate form
         document.getElementById('pub-id').value = pub.id;
