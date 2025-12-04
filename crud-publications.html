@@ -286,6 +286,113 @@
             margin: 0;
             color: #1e40af;
         }
+
+        /* Dark mode styles */
+        #theme-toggle-checkbox:checked ~ main {
+            .crud-container h1 {
+                color: var(--color-text-primary-dark);
+            }
+
+            .mode-btn {
+                border-color: var(--color-border-dark);
+                background: var(--color-bg-dark);
+                color: var(--color-text-primary-dark);
+            }
+
+            .mode-btn:hover {
+                border-color: var(--active-color);
+            }
+
+            .mode-btn.active {
+                background: var(--active-color);
+                color: white;
+                border-color: var(--active-color);
+            }
+
+            .current-mode-indicator {
+                background: var(--color-bg-alt-dark);
+                color: var(--active-color);
+            }
+
+            .crud-section {
+                background: var(--color-card-bg-dark);
+                border-color: var(--color-border-dark);
+                box-shadow: var(--color-card-shadow-dark);
+            }
+
+            .crud-section h2 {
+                color: var(--color-text-primary-dark);
+                border-bottom-color: var(--color-border-dark);
+            }
+
+            .form-group label {
+                color: var(--color-text-primary-dark);
+            }
+
+            .form-group input,
+            .form-group textarea {
+                border-color: var(--color-border-dark);
+                background: var(--color-bg-dark);
+                color: var(--color-text-primary-dark);
+            }
+
+            .form-group input:focus,
+            .form-group textarea:focus {
+                border-color: var(--active-color);
+            }
+
+            .form-group input::placeholder,
+            .form-group textarea::placeholder {
+                color: var(--color-text-muted-dark);
+            }
+
+            .form-group small {
+                color: var(--color-text-secondary-dark);
+            }
+
+            .publication-item {
+                background: var(--color-bg-alt-dark);
+                border-color: var(--color-border-dark);
+            }
+
+            .publication-item:hover {
+                border-color: var(--active-color);
+            }
+
+            .pub-info h3 {
+                color: var(--color-text-primary-dark);
+            }
+
+            .pub-meta,
+            .pub-desc {
+                color: var(--color-text-secondary-dark);
+            }
+
+            .stat-item {
+                background: var(--color-bg-alt-dark);
+            }
+
+            .stat-label {
+                color: var(--color-text-secondary-dark);
+            }
+
+            .info-box {
+                background: #1e3a5f;
+                border-left-color: #60a5fa;
+            }
+
+            .info-box p {
+                color: #93c5fd;
+            }
+
+            .btn-reset {
+                background: var(--color-text-secondary-dark);
+            }
+
+            #publications-list p {
+                color: var(--color-text-secondary-dark);
+            }
+        }
     </style>
 </head>
 
@@ -315,6 +422,9 @@
                 </li>
                 <li class="nav-item active">
                     <a href="/crud-publications.html">manage publications</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/form-with-js.html">contact</a>
                 </li>
                 <li class="nav-item">
                     <label for="theme-toggle-checkbox" id="theme-toggle-label" title="toggle dark mode">
